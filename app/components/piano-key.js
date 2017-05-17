@@ -4,9 +4,10 @@ import get from 'ember-metal/get';
 
 export default Component.extend({
   classNames: ['piano-key'],
-  audio: injectService(),
+  oscillator: injectService(),
 
   click() {
-    get(this, 'audio').playSound();
+    const oscillator = get(this, 'oscillator');
+    oscillator.playSound(oscillator.createSound());
   },
 });

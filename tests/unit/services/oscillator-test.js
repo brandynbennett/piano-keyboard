@@ -1,15 +1,31 @@
 import { moduleFor, test } from 'ember-qunit';
 import td from 'testdouble';
+import { AudioContextStub } from 'piano-keyboard/tests/helpers/mocked-services';
 
 const { when, replace, reset, verify } = td;
 
+/**
+ * Create a mock oscillator object
+ */
 function getMockOscillator() {
-  const osc = td.object(['start', 'connect']);
+  const osc = td.object(['start', 'connect', 'disconnect']);
   osc.frequency = {};
   return osc;
 }
 
-moduleFor('service:audio', 'Unit | Service | audio', {
+/**
+ * Force the service to provide the mocked oscillator
+ */
+function stubOscillator(service, oscillator) {
+  const oscillatorDouble = replace(service, '_createOscillator');
+  when(oscillatorDouble()).thenReturn(oscillator);
+}
+
+moduleFor('service:oscillator', 'Unit | Service | oscillator', {
+  beforeEach() {
+    this.register('service:audio-context', AudioContextStub);
+  },
+
   afterEach() {
     reset();
   },
@@ -17,16 +33,11 @@ moduleFor('service:audio', 'Unit | Service | audio', {
 
 test('#createSound sets the frequency', function(assert) {
   let service = this.subject();
+
   const freq = 500;
 
-  // Mock the context
-  service._context = {};
-
-  const osc = getMockOscillator();
-
   // Mock the oscillator call
-  const oscillatorDouble = replace(service, '_createOscillator');
-  when(oscillatorDouble()).thenReturn(osc);
+  stubOscillator(service, getMockOscillator());
 
   const sound = service.createSound(freq);
 
@@ -37,14 +48,7 @@ test('#createSound sets the waveform', function(assert) {
   let service = this.subject();
   const type = 'triangle';
 
-  // Mock the context
-  service._context = {};
-
-  const osc = getMockOscillator();
-
-  // Mock the oscillator call
-  const oscillatorDouble = replace(service, '_createOscillator');
-  when(oscillatorDouble()).thenReturn(osc);
+  stubOscillator(service, getMockOscillator());
 
   const sound = service.createSound(null, type);
 
@@ -52,36 +56,39 @@ test('#createSound sets the waveform', function(assert) {
 });
 
 test('#createSound starts the oscillator', function(assert) {
-  let service = this.subject();
-
   // Mock the context
-  service._context = {};
+  let service = this.subject();
 
   const osc = getMockOscillator();
 
   // Mock the oscillator call
-  const oscillatorDouble = replace(service, '_createOscillator');
-  when(oscillatorDouble()).thenReturn(osc);
+  stubOscillator(service, osc);
 
   service.createSound();
 
   assert.equal(verify(osc.start(0)), undefined, 'Called start');
 });
 
-test('#createSound connects the destination source', function(assert) {
+test('#playSound connects the destination source', function(assert) {
   let service = this.subject();
   const destination = 'foo';
 
   // Mock the context
-  service._context = { destination };
+  service.set('audioContext.context', { destination });
 
   const osc = getMockOscillator();
 
-  // Mock the oscillator call
-  const oscillatorDouble = replace(service, '_createOscillator');
-  when(oscillatorDouble()).thenReturn(osc);
-
-  service.createSound();
+  service.playSound(osc);
 
   assert.equal(verify(osc.connect(destination)), undefined, 'Connected');
+});
+
+test('#stopSound disconnects from the destination source', function(assert) {
+  let service = this.subject();
+
+  const osc = getMockOscillator();
+
+  service.stopSound(osc);
+
+  assert.equal(verify(osc.disconnect()), undefined, 'disconnected');
 });
