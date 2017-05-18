@@ -1,12 +1,13 @@
 const { pow, round } = Math;
 
+export const MAX_KEYS = 88;
+
 const NOTE_NAMES = ['C', 'C#/D♭', 'D', 'D#/E♭', 'E', 'F', 'F#/G♭', 'G', 'G#/A♭', 'A', 'A#/A♭', 'B'];
 
 /**
  * Which note numbers are black keys in an octave. 0 index
  */
 const BLACK_NOTES_IN_OCTAVE = [1, 3, 6, 8, 10];
-const MAX_KEYS = 88;
 const OCTAVE_PATTERN_BEGIN = 4; // 0 index
 const NOTES_IN_OCTAVE = 12;
 const MULTIPLIER = pow(2, 1/12);
@@ -73,11 +74,13 @@ export default function generateKeys(firstKey = 1, lastKey = MAX_KEYS) {
     const frequency = getFrequency(i);
     const isBlack = isKeyBlack(i);
     const noteName = getNoteName(i);
+    const numberInOctave = getNumberInOctave(i);
 
     keys.push({
       frequency,
       isBlack,
       noteName,
+      numberInOctave,
     });
   }
 

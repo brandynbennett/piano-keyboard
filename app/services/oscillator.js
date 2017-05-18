@@ -19,7 +19,7 @@ export default Service.extend({
    * @param {string} type The waveform to play the sound at.
    * [supported types](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode/type)
    */
-  createSound(frequency = 440, type = 'sine') {
+  createSound(frequency = 440, type = 'triangle') {
     const oscillator = this._createOscillator();
     oscillator.frequency.value = frequency;
     oscillator.type = type;

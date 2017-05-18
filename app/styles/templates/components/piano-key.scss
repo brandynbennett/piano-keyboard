@@ -1,0 +1,55 @@
+.piano-key {
+  $black-key-width: 51px;
+  $white-key-width: 88px;
+  $white-key-height: 330px;
+  $black-key-height: ($white-key-height * 0.75);
+  $key-border: solid 2px $smokey-black;
+  $white-key-padding: 4px;
+
+  height: $white-key-height;
+  min-width: $white-key-width;
+  background-color: $ivory;
+  border-right: $key-border;
+  border-top: $key-border;
+  border-bottom: $key-border;
+
+  // We don't want double borders on all, so we'll only do the right borders, but then give the
+  // first one a left border
+  &:first {
+    border-left: $key-border;
+  }
+
+  // Black key stylings. Need to make it overlay the white key
+  &.is-black {
+    height: 0px;
+    width: 0px;
+
+    // Reset this so it doesn't prevent the gap between keys from closing
+    min-width: auto;
+    z-index: $z-index-2;
+
+    // Only use the white keys as borders
+    border: 0px;
+
+    &:after {
+      content: '';
+      background-color: $smokey-black;
+      width: $black-key-width;
+      height: $black-key-height;
+      display: inline-block;
+      position: relative;
+      left: -30px;
+    }
+  }
+
+  // The name of the note (e.g "C4"). Should sit at bottom of the white key
+  .note-name {
+    position: relative;
+    text-align: center;
+    top: $white-key-height - $white-key-padding - $font-size-3;
+    font-family: $sans;
+    font-weight: $bold;
+    font-size: $font-size-3;
+    color: $muted-gray;
+  }
+}

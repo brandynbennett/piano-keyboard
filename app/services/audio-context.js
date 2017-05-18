@@ -1,6 +1,5 @@
 import Service from 'ember-service';
 import set from 'ember-metal/set';
-import get from 'ember-metal/get';
 
 export default Service.extend({
   /**
