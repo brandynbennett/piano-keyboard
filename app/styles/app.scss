@@ -1,4 +1,5 @@
 // Shared
+@import './shared/layout';
 @import './shared/fonts';
 @import './shared/colors';
 @import './shared/z-index';
@@ -8,6 +9,8 @@
 
 // Components
 @import './templates/components/piano-keyboard';
+@import './templates/components/piano-controls';
+@import './templates/components/piano-keys';
 @import './templates/components/piano-key';
 
 

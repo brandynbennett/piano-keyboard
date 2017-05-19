@@ -12,5 +12,4 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{piano-keyboard}}`);
 
-  // assert.equal(this.$();
 });

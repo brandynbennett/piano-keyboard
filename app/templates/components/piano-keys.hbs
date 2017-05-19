@@ -1,0 +1,6 @@
+{{#each pianoKeys as |pianoKey|}}
+  {{piano-key isBlack=pianoKey.isBlack
+    frequency=pianoKey.frequency
+    noteName=pianoKey.noteName
+    numberInOctave=pianoKey.numberInOctave}}
+{{/each}}

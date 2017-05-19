@@ -1,0 +1,4 @@
+.piano-controls {
+  // On a narrow screen fill the rest of the screen with the controls
+  min-height: $iphone-5-width - $white-key-min-height - ($screen-padding * 2);
+}
