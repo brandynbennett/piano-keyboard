@@ -1,7 +1,12 @@
 .piano-keys {
   display: flex;
 
-  // Make it so that the keys scrolls inside of the keyboard and the rest of the page
-  // stays in the viewport
-  overflow-x: scroll;
+  // Only scroll when the class is turned on
+  overflow:hidden;
+
+  &.is-scrollable {
+    // Make it so that the keys scrolls inside of the keyboard and the rest of the page
+    // stays in the viewport
+    overflow-x: scroll;
+  }
 }
