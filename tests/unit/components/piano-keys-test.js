@@ -100,37 +100,7 @@ test('Starts adding keybindings at the beginning if there are too few keys', fun
   assert.equal(component.get('bindingStartIndex'), 3, 'Binds at beginning of keyboard');
 });
 
-test('Starts adding keybindings on C note most in the middle if enough keys are in view', function(assert) {
-  assert.expect(1);
-
-  let keysInViewport = [];
-  for (let i = 0; i <= SHOULD_CENTER_BINDINGS_AT; i++) {
-    keysInViewport.push(i);
-  }
-
-  let component = this.subject({
-    keysInViewport,
-  });
-
-  assert.equal(component.get('bindingStartIndex'), 15, 'Binds at the C most in the middle')
-});
-
-test('Starts adding keybindings on C note most in the middle if more than 3 C notes in view', function(assert) {
-  assert.expect(1);
-
-  let keysInViewport = [];
-  for (let i = 0; i <= 87; i++) {
-    keysInViewport.push(i);
-  }
-
-  let component = this.subject({
-    keysInViewport,
-  });
-
-  assert.equal(component.get('bindingStartIndex'), 15, 'Binds at the C most in the middle')
-});
-
-test('Starts adding keybindings on the first C note if less than 3 C notes showing', function(assert) {
+test('Starts adding keybindings on the first C note', function(assert) {
   assert.expect(1);
 
   let offset = 7;
@@ -144,5 +114,5 @@ test('Starts adding keybindings on the first C note if less than 3 C notes showi
     keysInViewport,
   });
 
-  assert.equal(component.get('bindingStartIndex'), 15, 'Binds at the C most in the middle')
+  assert.equal(component.get('bindingStartIndex'), 15, 'Binds at the first C note');
 });

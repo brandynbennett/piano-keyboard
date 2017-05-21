@@ -1,6 +1,13 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { IS_BLACK, PIANO_KEY, IS_PLAYING, NOTE_NAME } from 'piano-keyboard/tests/helpers/dom-selectors';
+import {
+  IS_BLACK,
+  PIANO_KEY,
+  IS_PLAYING,
+  NOTE_NAME,
+  COMPUTER_KEY_BINDING,
+  SR_TEXT,
+} from 'piano-keyboard/tests/helpers/dom-selectors';
 import { OscillatorStub } from 'piano-keyboard/tests/helpers/mocked-services';
 
 moduleForComponent('piano-key', 'Integration | Component | piano key', {
@@ -62,15 +69,35 @@ test('Sound stops on mouseleave', function(assert) {
 });
 
 test('Shows notename for C notes', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
+  const HIDDEN_NOTE_NAME = `${NOTE_NAME}${SR_TEXT}`;
   const noteName = 'foo';
   this.set('numberInOctave', 0);
   this.set('noteName', noteName);
   this.render(hbs`{{piano-key numberInOctave=numberInOctave noteName=noteName}}`);
 
-  assert.equal(this.$(NOTE_NAME).length, 1, 'See note name');
+  assert.equal(this.$(HIDDEN_NOTE_NAME).length, 0, 'See note name');
 
   this.set('numberInOctave', 4);
-  assert.equal(this.$(NOTE_NAME).length, 0, 'No more note name');
+  assert.equal(this.$(NOTE_NAME).text().trim(), noteName, 'Note nome is available to screen reader');
+  assert.equal(this.$(HIDDEN_NOTE_NAME).length, 1, 'No more note name');
+});
+
+test('Shows computer key bindings if desired', function(assert) {
+  assert.expect(3);
+
+  const keyName = 'foo';
+  this.set('computerKey', { keyName });
+  this.set('showComputerKey', true);
+  this.render(hbs`{{piano-key computerKey=computerKey showComputerKey=showComputerKey}}`);
+
+  assert.equal(this.$(COMPUTER_KEY_BINDING).text().trim(), keyName, 'Shows binding');
+
+  this.set('computerKey', null);
+  assert.equal(this.$(COMPUTER_KEY_BINDING).length, 0, 'No binding if there is none');
+
+  this.set('computerKey', { keyName });
+  this.set('showComputerKey', false);
+  assert.equal(this.$(COMPUTER_KEY_BINDING).length, 0, 'No binding if turned off');
 });

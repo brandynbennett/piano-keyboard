@@ -2,12 +2,13 @@ import Component from 'ember-component'
 import injectService from 'ember-service/inject';
 import get from 'ember-metal/get';
 import set from 'ember-metal/set';
-import computed, { equal } from 'ember-computed';
+import computed, { equal, and } from 'ember-computed';
 import InViewportMixin from 'ember-in-viewport';
 import WindowKeyboardEventsMixin from 'piano-keyboard/mixins/window-keyboard-events';
 import on from 'ember-evented/on';
 
 export default Component.extend(InViewportMixin, WindowKeyboardEventsMixin, {
+  tagName: 'button',
   classNames: ['piano-key'],
   classNameBindings: ['isBlack', 'isPlaying'],
 
@@ -63,6 +64,17 @@ export default Component.extend(InViewportMixin, WindowKeyboardEventsMixin, {
    * The computer keyboard key to bind the note to
    */
   computerKey: null,
+
+  /**
+   * Whether or not the user wants help knowing which notes are bound to which keys
+   */
+  showComputerKey: true,
+
+  /**
+   * If the user wants to see the computer key bindings and the key actually has one then we
+   * should show it.
+   */
+  shouldDisplayComputerKey: and('computerKey', 'showComputerKey').readOnly(),
 
   /**
    * The sound object created from the oscillator

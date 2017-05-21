@@ -1,17 +1,27 @@
 .piano-key {
+	// How wide black key is proportionate to white key
   $black-key-width-multiplier: 0.58;
   $white-key-max-height: 330px;
   $white-key-min-height: 250px;
+	// How tall black key is proportionate to white key
   $black-key-height-mulitplier: 0.65;
-  $black-key-offset-multiplier: 0.34;
+  $black-key-min-width: $white-key-min-width * $black-key-width-multiplier;
+  $black-key-max-width: $white-key-max-width * $black-key-width-multiplier;
+	$black-key-border-size: 4px;
+	$black-key-max-offset: (($black-key-max-width + $black-key-border-size * 2) / 2);
+	$black-key-min-offset: (($black-key-min-width + $black-key-border-size * 2) / 2);
   $white-key-border: solid 2px $black-0;
-  $black-key-border: solid 4px $black-0;
+  $black-key-border: solid $black-key-border-size $black-0;
   $white-key-padding: 4px;
   $white-key-border-radius: 8px;
   $black-key-border-radius: 4px;
   $end-of-black-key: #4C4D52;
   $side-of-black-key: #191A1C;
+  $key-binding-size: 30px;
 
+  // Make the key relative, so that we can move the key binding hint without affecting the rest
+  // of the key
+  position: relative;
   height: $white-key-min-height;
   min-width: $white-key-min-width;
   background-color: $ivory;
@@ -22,8 +32,11 @@
     bottom: $white-key-border;
   }
 
-  // We're using width to change height, because the piano will be in landscape mode
-  @media screen and (min-width: $ipad-width) {
+  // We don't want an outline showing up on touch devices when the user taps
+  outline: none;
+
+  // We're using the device's height, because the piano will be in landscape mode
+  @media screen and (min-width: $ipad-height + 1) {
     height: $white-key-max-height;
     min-width: $white-key-max-width;
   }
@@ -52,17 +65,17 @@
       border: $black-key-border;
       border-radius: 0 0 $black-key-border-radius $black-key-border-radius;
       content: '';
-      width: $white-key-min-width * $black-key-width-multiplier;
+      width: $black-key-min-width;
       height: $white-key-min-height * $black-key-height-mulitplier;
       display: inline-block;
       position: relative;
-      left: -$white-key-min-width * $black-key-offset-multiplier;
+      left: -$black-key-min-offset;
 
       // We're using width to change height, because the piano will be in landscape mode
-      @media screen and (min-width: $ipad-width) {
+      @media screen and (min-width: $ipad-height + 1) {
         height: $white-key-max-height * $black-key-height-mulitplier;
-        width: $white-key-max-width * $black-key-width-multiplier;
-        left: -$white-key-max-width * $black-key-offset-multiplier;
+        width: $black-key-max-width;
+        left: -$black-key-max-offset;
       }
     }
 
@@ -70,6 +83,12 @@
       // Make it appear like it's depressed
       box-shadow: inset 0 0 40px 0px $black-0;
       background: linear-gradient(to bottom, $black-ivory 0%, $end-of-black-key 96%, $side-of-black-key 100%);
+    }
+
+    // Change positioning of the computer key binding for black keys
+    .computer-key-binding {
+      left : -($key-binding-size / 2);
+      top: 164px;
     }
   }
 
@@ -82,14 +101,39 @@
   .note-name {
     position: relative;
     text-align: center;
-    top: $white-key-min-height - $white-key-padding - $font-size-3;
+    top: ($white-key-min-height / 2) - $white-key-padding - ($font-size-3 / 2);
     font-family: $sans;
     font-weight: $bold;
     font-size: $font-size-3;
     color: $muted-gray;
 
-    @media screen and (min-width: $ipad-width) {
-      top: $white-key-max-height - $white-key-padding - $font-size-3;
+    @media screen and (min-width: $ipad-height + 1) {
+			top: ($white-key-max-height / 2) - $white-key-padding - ($font-size-3 / 2);
+    }
+  }
+
+  // The computer key the note is bound to. Should be on top of the key so the user knows which
+  // computer keys to press
+  .computer-key-binding {
+    position: absolute;
+    left: ($white-key-max-width / 2) - ($key-binding-size / 2);
+    top: 254px;
+    z-index: $z-index-3;
+    background-color: $muted-gray;
+    color: $ivory;
+    border-radius: 4px;
+    opacity: 0;
+    width: $key-binding-size;
+    height: $key-binding-size;
+
+    // Align text vertically and horizontally
+    text-align: center;
+    line-height: $key-binding-size;
+
+    // Touch screens don't need keyboard help because they can use their fingers, so we'll only
+    // show it on bigger screens
+    @media screen and (min-width: $ipad-height + 1) {
+      opacity: 0.75;
     }
   }
 }

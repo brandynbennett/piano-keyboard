@@ -1,10 +1,9 @@
 {{!-- If the user wants to see the computer key bindings and the key has one, we should show it --}}
-{{#if shouldShowComputerKey}}
-  <div class="computer-key-bindings">{{computerKey.keyName}}</div>
+{{#if shouldDisplayComputerKey}}
+  <div class="computer-key-binding">{{computerKey.keyName}}</div>
 {{/if}}
 
 {{!-- Certain notes should display the name of the note to help the user know where they are
-  on the keyboard --}}
-{{#if shouldShowNoteName}}
-  <div class="note-name">{{noteName}}</div>
-{{/if}}
+  on the keyboard. The rest should still have the note name but it should be hidden and
+  accessible by screen readers--}}
+<div class={{if shouldShowNoteName "note-name" (concat "note-name " "sr-text")}}>{{noteName}}</div>

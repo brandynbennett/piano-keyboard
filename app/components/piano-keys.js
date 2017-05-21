@@ -32,8 +32,7 @@ export default Component.extend({
         return pianoKeys[keyIndex].numberInOctave === 0;
       });
 
-      // If there are 3 "C" notes displayed choose the middle one, otherwise choose the first one
-      return cNotes.length >= 3 ? cNotes[1] : cNotes[0];
+      return cNotes[0];
     }
 
     // Use the first key in the viewport
