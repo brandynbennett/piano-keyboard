@@ -1,15 +1,15 @@
 .piano-key {
-	// How wide black key is proportionate to white key
+  // How wide black key is proportionate to white key
   $black-key-width-multiplier: 0.58;
   $white-key-max-height: 330px;
   $white-key-min-height: 250px;
-	// How tall black key is proportionate to white key
+  // How tall black key is proportionate to white key
   $black-key-height-mulitplier: 0.65;
   $black-key-min-width: $white-key-min-width * $black-key-width-multiplier;
   $black-key-max-width: $white-key-max-width * $black-key-width-multiplier;
-	$black-key-border-size: 4px;
-	$black-key-max-offset: (($black-key-max-width + $black-key-border-size * 2) / 2);
-	$black-key-min-offset: (($black-key-min-width + $black-key-border-size * 2) / 2);
+  $black-key-border-size: 4px;
+  $black-key-max-offset: (($black-key-max-width + $black-key-border-size * 2) / 2);
+  $black-key-min-offset: (($black-key-min-width + $black-key-border-size * 2) / 2);
   $white-key-border: solid 2px $black-0;
   $black-key-border: solid $black-key-border-size $black-0;
   $white-key-padding: 4px;
@@ -34,6 +34,12 @@
 
   // We don't want an outline showing up on touch devices when the user taps
   outline: none;
+
+  // Don't let the user select the keys so they don't show context menu or other things
+  user-select: none;
+
+  // Turn off the black box that happens on ios when you tap on things
+  -webkit-tap-highlight-color: transparent;
 
   // We're using the device's height, because the piano will be in landscape mode
   @media screen and (min-width: $ipad-height + 1) {
@@ -108,7 +114,7 @@
     color: $muted-gray;
 
     @media screen and (min-width: $ipad-height + 1) {
-			top: ($white-key-max-height / 2) - $white-key-padding - ($font-size-3 / 2);
+      top: ($white-key-max-height / 2) - $white-key-padding - ($font-size-3 / 2);
     }
   }
 
