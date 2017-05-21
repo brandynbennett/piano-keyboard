@@ -3,12 +3,26 @@ import injectService from 'ember-service/inject';
 import get from 'ember-metal/get';
 import set from 'ember-metal/set';
 import computed, { equal } from 'ember-computed';
+import InViewportMixin from 'ember-in-viewport';
+import WindowKeyboardEventsMixin from 'piano-keyboard/mixins/window-keyboard-events';
+import on from 'ember-evented/on';
 
-export default Component.extend({
+export default Component.extend(InViewportMixin, WindowKeyboardEventsMixin, {
   classNames: ['piano-key'],
   classNameBindings: ['isBlack', 'isPlaying'],
 
   oscillator: injectService(),
+
+  /**
+   * We need to set `viewport` spy to `true` otherwise the component will only be watched when it
+   * enters and then it will stop being watched. We need to keep track of when the component
+   * exits the viewport as well.
+   *
+   * @override
+   */
+  viewportOptionsOverride: on('didInsertElement', function() {
+    set(this, 'viewportSpy', true);
+  }),
 
   /**
    * Whether or not the key is a black key on the keyboard
@@ -34,6 +48,21 @@ export default Component.extend({
    * The frequency the note should be
    */
   frequency: null,
+
+  /**
+   * The number of the note on the keyboard 1 - 88
+   */
+  noteNumber: null,
+
+  /**
+   * The index of the note
+   */
+  noteIndex: null,
+
+  /**
+   * The computer keyboard key to bind the note to
+   */
+  computerKey: null,
 
   /**
    * The sound object created from the oscillator
@@ -88,5 +117,43 @@ export default Component.extend({
 
   touchEnd() {
     this.stopPlaying();
+  },
+
+  /**
+   * We want to trigger an action when the key enters the viewport so the parent component can
+   * keep track of which keys are in the viewport. Will fire `onEnterViewport` with the note number
+   *
+   * @override
+   */
+  didEnterViewport() {
+    get(this, 'onEnterViewport')(get(this, 'noteIndex'));
+  },
+
+  /**
+   * We want to trigger an action when the key exits the viewport so the parent component can
+   * keep track of which keys are in the viewport. Will fire `onExitViewport` with the note number
+   *
+   * @override
+   */
+  didExitViewport() {
+    get(this, 'onExitViewport')(get(this, 'noteIndex'));
+  },
+
+  /**
+   * @override
+   */
+  didWindowKeyDown({ keyCode }) {
+    if (keyCode === get(this, 'computerKey.keyCode')) {
+      this.startPlaying();
+    }
+  },
+
+  /**
+   * @override
+   */
+  didWindowKeyUp({ keyCode }) {
+    if (keyCode === get(this, 'computerKey.keyCode')) {
+      this.stopPlaying();
+    }
   },
 });

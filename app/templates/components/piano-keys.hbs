@@ -1,6 +1,11 @@
-{{#each pianoKeys as |pianoKey|}}
+{{#each pianoKeysWithBindings as |pianoKey index|}}
   {{piano-key isBlack=pianoKey.isBlack
     frequency=pianoKey.frequency
     noteName=pianoKey.noteName
-    numberInOctave=pianoKey.numberInOctave}}
+    numberInOctave=pianoKey.numberInOctave
+    noteNumber= pianoKey.noteNumber
+    noteIndex=index
+    computerKey=pianoKey.computerKey
+    onEnterViewport=(action "keyEnteredViewport")
+    onExitViewport=(action "keyExitedViewport")}}
 {{/each}}

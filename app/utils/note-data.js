@@ -1,5 +1,6 @@
 const { pow, round } = Math;
 
+// There are 88 keys on a piano
 export const MAX_KEYS = 88;
 
 const NOTE_NAMES = ['C', 'C#/D♭', 'D', 'D#/E♭', 'E', 'F', 'F#/G♭', 'G', 'G#/A♭', 'A', 'A#/A♭', 'B'];
@@ -64,23 +65,24 @@ function isKeyBlack(keyNum) {
  * @param {number} firstKey The first key you want as part of your keyboard
  * @param {number} lastKey The last piano key you want as part of your keyboard
  *
- * return {array{
+ * return {array}
  */
 export default function generateKeys(firstKey = 1, lastKey = MAX_KEYS) {
   const keys = [];
 
-  // There are 88 keys on a piano
   for (let i = firstKey; i <= lastKey; i++) {
     const frequency = getFrequency(i);
     const isBlack = isKeyBlack(i);
     const noteName = getNoteName(i);
     const numberInOctave = getNumberInOctave(i);
+    const noteNumber = i;
 
     keys.push({
       frequency,
       isBlack,
       noteName,
       numberInOctave,
+      noteNumber,
     });
   }
 

@@ -44,3 +44,12 @@ test('Number in ocative is correct', function(assert) {
   assert.equal(this.notes[58].numberInOctave, 7, 'G5 is correct');
   assert.equal(this.notes[87].numberInOctave, 0, 'C8 is correct');
 });
+
+test('Note numbers are correct', function(assert) {
+  assert.expect(4);
+
+  assert.equal(this.notes[0].noteNumber, 1, 'A0 is correct');
+  assert.equal(this.notes[1].noteNumber, 2, 'A#0/A♭0 is correct');
+  assert.equal(this.notes[58].noteNumber, 59, 'G5 is correct');
+  assert.equal(this.notes[87].noteNumber, 88, 'C8 is correct');
+});
