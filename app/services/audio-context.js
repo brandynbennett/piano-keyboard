@@ -24,6 +24,7 @@ export default Service.extend({
    * Proxy to Web Audio API
    */
   _getAudioContext() {
-    return new AudioContext();
+    const audioContext = window.AudioContext || window.webkitAudioContext;
+    return new audioContext();
   },
 });

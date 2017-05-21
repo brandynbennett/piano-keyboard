@@ -1,4 +1,14 @@
 .piano-keyboard {
   width: 100%;
   padding: $screen-padding;
+
+  // Rotate the entire app 90deg so that the user knows the app works best in landscape mode
+  @media all and (orientation:portrait) {
+    transform-origin: left top;
+    transform: rotate(-90deg);
+    width: 100vh;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
 }
