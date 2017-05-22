@@ -6,6 +6,7 @@ import computed, { equal, and } from 'ember-computed';
 import InViewportMixin from 'ember-in-viewport';
 import WindowKeyboardEventsMixin from 'piano-keyboard/mixins/window-keyboard-events';
 import on from 'ember-evented/on';
+import { DEFAULT_WAVE_MODE } from 'piano-keyboard/utils/wave-modes';
 
 export default Component.extend(InViewportMixin, WindowKeyboardEventsMixin, {
   tagName: 'button',
@@ -51,6 +52,11 @@ export default Component.extend(InViewportMixin, WindowKeyboardEventsMixin, {
   frequency: null,
 
   /**
+   * The type of wave to use for the sound
+   */
+  waveType: '',
+
+  /**
    * The number of the note on the keyboard 1 - 88
    */
   noteNumber: null,
@@ -79,8 +85,9 @@ export default Component.extend(InViewportMixin, WindowKeyboardEventsMixin, {
   /**
    * The sound object created from the oscillator
    */
-  sound: computed('frequency', function() {
-    return get(this, 'oscillator').createSound(get(this, 'frequency'));
+  sound: computed('frequency', 'waveType', function() {
+    const waveType = get(this, 'waveType') || DEFAULT_WAVE_MODE;
+    return get(this, 'oscillator').createSound(get(this, 'frequency'), waveType);
   }).readOnly(),
 
   /**

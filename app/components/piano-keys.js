@@ -97,6 +97,11 @@ export default Component.extend({
    */
   sortedKeysInViewport: sort('keysInViewport.[]', (a, b) => a - b).readOnly(),
 
+  /**
+   * The wave mode for the keys
+   */
+  waveMode: '',
+
   init() {
     this._super(...arguments);
     set(this, 'pianoKeys', this._generateKeys());

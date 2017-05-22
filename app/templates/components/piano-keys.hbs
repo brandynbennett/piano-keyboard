@@ -1,6 +1,7 @@
 {{#each pianoKeysWithBindings as |pianoKey index|}}
   {{piano-key isBlack=pianoKey.isBlack
     frequency=pianoKey.frequency
+    waveType=waveMode
     noteName=pianoKey.noteName
     numberInOctave=pianoKey.numberInOctave
     noteNumber= pianoKey.noteNumber

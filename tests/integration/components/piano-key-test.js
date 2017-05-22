@@ -9,12 +9,16 @@ import {
   SR_TEXT,
 } from 'piano-keyboard/tests/helpers/dom-selectors';
 import { OscillatorStub } from 'piano-keyboard/tests/helpers/mocked-services';
+import td from 'testdouble';
+
+const { verify, replace } = td;
 
 moduleForComponent('piano-key', 'Integration | Component | piano key', {
   integration: true,
 
   beforeEach() {
     this.register('service:oscillator', OscillatorStub);
+    this.inject.service('oscillator');
   },
 });
 
@@ -100,4 +104,18 @@ test('Shows computer key bindings if desired', function(assert) {
   this.set('computerKey', { keyName });
   this.set('showComputerKey', false);
   assert.equal(this.$(COMPUTER_KEY_BINDING).length, 0, 'No binding if turned off');
+});
+
+test('Creates a new sound with a different wave', function(assert) {
+  assert.expect(1);
+
+  const createSoundDouble = replace(this.get('oscillator'), 'createSound');
+  const freq = 'foo';
+  this.set('frequency', freq);
+  const waveType = 'foo';
+  this.set('waveType', waveType);
+  this.render(hbs`{{piano-key frequency=frequency waveType=waveType}}`);
+  this.$(PIANO_KEY).trigger('mousedown');
+
+  assert.equal(verify(createSoundDouble(freq, waveType)), undefined, 'Created sound');
 });

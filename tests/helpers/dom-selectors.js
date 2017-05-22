@@ -12,3 +12,4 @@ export const MODE_SWITCHER = '.mode-switcher';
 export const MODE_INDICATOR = '.mode-indicator';
 export const IS_ACTIVE = '.is-active';
 export const SCROLL_MODE_SWITCHER = '.scroll-mode-switcher';
+export const WAVE_MODE_SWITCHER = '.wave-mode-switcher';

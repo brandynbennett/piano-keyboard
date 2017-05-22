@@ -1,5 +1,6 @@
 import Component from 'ember-component';
 import scrollModes from 'piano-keyboard/utils/scroll-modes';
+import waveModes from 'piano-keyboard/utils/wave-modes';
 import set from 'ember-metal/set';
 
 const PREVENT_SCROLL_FUNC = evt => evt.preventDefault();
@@ -13,9 +14,19 @@ export default Component.extend({
   scrollModes,
 
   /**
+   * Modes that affect the sound of the keys
+   */
+  waveModes,
+
+  /**
    * Whether or not the keyboard should be able to scroll
    */
   shouldScroll: true,
+
+  /**
+   * The wave mode that the user selected
+   */
+  selectedWaveMode: waveModes[0],
 
   actions: {
     /**
@@ -32,6 +43,13 @@ export default Component.extend({
       } else {
         this._removeEventListener('touchmove', this._getPreventScroll());
       }
+    },
+
+    /**
+     * Update the state when the user updates the wave mode
+     */
+    onWaveModeSwitch(mode) {
+      set(this, 'selectedWaveMode', mode);
     },
   },
 

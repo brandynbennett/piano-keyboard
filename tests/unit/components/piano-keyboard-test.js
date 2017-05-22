@@ -33,3 +33,12 @@ test('It can allow scrolling on touch devices', function(assert) {
 
   assert.equal(verify(removeEventListenerDouble(TOUCH_MOVE, preventScrollDouble)), undefined);
 });
+
+test('It updates the wave mode', function(assert) {
+  assert.expect(1);
+  let component = this.subject();
+  let expected = 'foo';
+  component.actions.onWaveModeSwitch.bind(component)(expected);
+
+  assert.equal(component.get('selectedWaveMode'), expected);
+});

@@ -1,12 +1,14 @@
 .mode-switcher {
-  min-width: 54px;
+  $mode-indicator-height: 4px;
 
   .mode-indicator {
-    height: 4px;
+    height: $mode-indicator-height;
     width: 4px;
     display: inline-block;
     border-radius: 4px;
     background-color: $black-0;
+    vertical-align: top;
+    margin-top: 2px;
   }
 
   .mode-indicator.is-active {

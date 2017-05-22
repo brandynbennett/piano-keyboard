@@ -1,7 +1,15 @@
 <div class="piano-controls">
+  {{!-- Scroll mode control --}}
   {{controls/mode-switcher
     class="scroll-mode-switcher"
     modes=scrollModes
     onSwitch=(action "onScrollModeSwitch")}}
+
+  {{!-- Wave mode control --}}
+  {{one-way-select class="wave-mode-switcher bevel-button"
+    options=waveModes
+    optionValuePath='value'
+    optionLabelPath='displayName'
+    update=(action "onWaveModeSwitch")}}
 </div>
-{{piano-keys isScrollable=shouldScroll}}
+{{piano-keys isScrollable=shouldScroll waveMode=selectedWaveMode.value}}
