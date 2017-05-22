@@ -1,2 +1,7 @@
-{{piano-controls}}
-{{piano-keys}}
+<div class="piano-controls">
+  {{controls/mode-switcher
+    class="scroll-mode-switcher"
+    modes=scrollModes
+    onSwitch=(action "onScrollModeSwitch")}}
+</div>
+{{piano-keys isScrollable=shouldScroll}}

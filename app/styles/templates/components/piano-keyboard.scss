@@ -11,4 +11,15 @@
     top: 100%;
     left: 0;
   }
+
+  .piano-controls {
+    // On a narrow screen fill the rest of the screen with the controls
+    min-height: $iphone-5-width - $white-key-min-height - ($screen-padding * 2);
+    padding-bottom: 4px;
+
+    // Keyboard is underneath controls so we want bottom of controls to be close to keyboard
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
 }

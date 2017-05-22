@@ -1,0 +1,15 @@
+.mode-switcher {
+  min-width: 54px;
+
+  .mode-indicator {
+    height: 4px;
+    width: 4px;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: $black-0;
+  }
+
+  .mode-indicator.is-active {
+    background-color: $ivory;
+  }
+}

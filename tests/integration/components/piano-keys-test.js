@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { IS_SCROLLABLE } from 'piano-keyboard/tests/helpers/dom-selectors';
 
-moduleForComponent('piano-keyboard', 'Integration | Component | piano keyboard', {
+moduleForComponent('piano-keys', 'Integration | Component | piano keys', {
   integration: true
 });
 

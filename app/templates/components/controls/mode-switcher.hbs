@@ -1,0 +1,8 @@
+<div class="display-name">{{selectedMode.displayName}}</div>
+<div class="mode-indicators">
+  {{#each modes as |mode index|}}
+    <span class={{if (eq index selectedIndex)
+      (concat "mode-indicator" " is-active")
+      "mode-indicator"}}></span>
+  {{/each}}
+</div>

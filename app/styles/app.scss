@@ -1,18 +1,18 @@
 // Shared
 @import './shared/reset';
-@import './shared/elements';
-@import './shared/layout';
-@import './shared/fonts';
 @import './shared/colors';
+@import './shared/fonts';
+@import './shared/layout';
 @import './shared/z-index';
+@import './shared/elements';
 
 // Templates
 @import './templates/application';
 
 // Components
 @import './templates/components/piano-keyboard';
-@import './templates/components/piano-controls';
 @import './templates/components/piano-keys';
 @import './templates/components/piano-key';
+@import './templates/components/controls/mode-switcher';
 
 

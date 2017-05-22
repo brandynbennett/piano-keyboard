@@ -4,4 +4,7 @@ button {
   border: 0;
   box-sizing: content-box;
   margin: 0;
+
+  // We don't want an outline showing up on touch devices when the user taps
+  outline: none;
 }
