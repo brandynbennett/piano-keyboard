@@ -1,7 +1,15 @@
-# piano-keyboard
+# Ember Piano Keyboard
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+![piano screenshot](docs/images/piano-screenshot.png)
+
+This Ember app uses the Web Audio API to create an interactive piano keyboard. The keyboard works
+on mobile as well as desktop.
+
+Features include:
+
+* Computer keyboard key bindings on desktop
+* Toggle between different keyboard types
+* Toggle between scroll mode and glissando mode
 
 ## Prerequisites
 
@@ -36,10 +44,6 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 * `ember build` (development)
 * `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
 
 ## Further Reading / Useful Links
 
