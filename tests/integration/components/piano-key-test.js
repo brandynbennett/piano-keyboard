@@ -8,7 +8,7 @@ import {
   COMPUTER_KEY_BINDING,
   SR_TEXT,
 } from 'piano-keyboard/tests/helpers/dom-selectors';
-import { OscillatorStub } from 'piano-keyboard/tests/helpers/mocked-services';
+import { OscillatorStub, WindowEventsStub } from 'piano-keyboard/tests/helpers/mocked-services';
 import td from 'testdouble';
 
 const { verify, replace } = td;
@@ -19,6 +19,8 @@ moduleForComponent('piano-key', 'Integration | Component | piano key', {
   beforeEach() {
     this.register('service:oscillator', OscillatorStub);
     this.inject.service('oscillator');
+    this.register('service:window-events', WindowEventsStub);
+    this.inject.service('window-events', { as: 'windowEvents' });
   },
 });
 
@@ -47,17 +49,6 @@ test('Classes updated when stopping sound', function(assert) {
   this.$(PIANO_KEY).trigger('mousedown');
   assert.equal(this.$(IS_PLAYING).length, 1, 'Is playing');
   this.$(PIANO_KEY).trigger('mouseup');
-  assert.equal(this.$(IS_PLAYING).length, 0, 'Stopped playing');
-});
-
-test('Works with touch events', function(assert) {
-  assert.expect(2);
-
-  this.render(hbs`{{piano-key}}`);
-
-  this.$(PIANO_KEY).trigger('touchstart');
-  assert.equal(this.$(IS_PLAYING).length, 1, 'Is playing');
-  this.$(PIANO_KEY).trigger('touchend');
   assert.equal(this.$(IS_PLAYING).length, 0, 'Stopped playing');
 });
 
@@ -118,4 +109,17 @@ test('Creates a new sound with a different wave', function(assert) {
   this.$(PIANO_KEY).trigger('mousedown');
 
   assert.equal(verify(createSoundDouble(freq, waveType)), undefined, 'Created sound');
+});
+
+test('Plays on mousenter if the mouse is down', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`{{piano-key}}`);
+
+  this.$(PIANO_KEY).trigger('mouseenter');
+  assert.equal(this.$(IS_PLAYING).length, 0, 'Not playing');
+
+  this.set('windowEvents.isMouseDown', true);
+  this.$(PIANO_KEY).trigger('mouseenter');
+  assert.equal(this.$(IS_PLAYING).length, 1, 'Is playing');
 });

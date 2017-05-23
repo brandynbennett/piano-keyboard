@@ -1,6 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import { A_KEY, S_KEY, D_KEY, W_KEY, R_KEY, T_KEY } from 'piano-keyboard/utils/key-bindings';
 import { SHOULD_CENTER_BINDINGS_AT } from 'piano-keyboard/components/piano-keys';
+import td from 'testdouble';
+
+const { verify, when, matchers: { anything } } = td;
 
 moduleForComponent('piano-keys', 'Unit | Component | piano keys', {
   unit: true,
@@ -115,4 +118,22 @@ test('Starts adding keybindings on the first C note', function(assert) {
   });
 
   assert.equal(component.get('bindingStartIndex'), 15, 'Binds at the first C note');
+});
+
+test('Scrolls to middle on page load', function(assert) {
+  assert.expect(1);
+
+  let middle = 1000;
+  let scrollLeftDouble = td.func();
+  let getOffsetDouble = td.func();
+  when(getOffsetDouble(anything())).thenReturn(middle);
+
+  let component = this.subject({
+    _getKeyLeftOffset: getOffsetDouble,
+    _scrollLeft: scrollLeftDouble,
+  });
+
+  component.didInsertElement();
+
+  assert.equal(verify(scrollLeftDouble(middle)), undefined, 'Scrolled to middle');
 });

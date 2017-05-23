@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import td from 'testdouble';
-import { OscillatorStub } from 'piano-keyboard/tests/helpers/mocked-services';
+import { OscillatorStub, WindowEventsStub } from 'piano-keyboard/tests/helpers/mocked-services';
 
 const { verify } = td;
 
@@ -9,6 +9,7 @@ moduleForComponent('piano-key', 'Unit | Component | piano key', {
 
   beforeEach() {
     this.register('service:oscillator', OscillatorStub);
+    this.register('service:window-events', WindowEventsStub);
   },
 });
 
@@ -34,4 +35,22 @@ test('It fires action when exiting viewport', function(assert) {
 
   component.didExitViewport();
   assert.equal(verify(exitViewportDouble(noteIndex)), undefined, 'Called action');
+});
+
+test('Works with touch events', function(assert) {
+  assert.expect(4);
+
+  let component = this.subject();
+
+  component.didTouchStart();
+  assert.equal(component.get('isPlaying'), true);
+
+  component.didTouchEnd();
+  assert.equal(component.get('isPlaying'), false);
+
+  component.didTouchEnter();
+  assert.equal(component.get('isPlaying'), true);
+
+  component.didTouchLeave();
+  assert.equal(component.get('isPlaying'), false);
 });

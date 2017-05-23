@@ -108,6 +108,9 @@
     font-size: $font-size-3;
     color: $muted-gray;
 
+    // We don't want this element to get in the way of knowing which note the user is touching
+    pointer-events: none;
+
     @media screen and (min-width: $ipad-height + 1) {
       top: ($white-key-max-height / 2) - $white-key-padding - ($font-size-3 / 2);
     }

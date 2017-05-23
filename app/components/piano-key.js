@@ -4,16 +4,17 @@ import get from 'ember-metal/get';
 import set from 'ember-metal/set';
 import computed, { equal, and } from 'ember-computed';
 import InViewportMixin from 'ember-in-viewport';
-import WindowKeyboardEventsMixin from 'piano-keyboard/mixins/window-keyboard-events';
+import WindowEventsMixin from 'piano-keyboard/mixins/window-events';
 import on from 'ember-evented/on';
 import { DEFAULT_WAVE_MODE } from 'piano-keyboard/utils/wave-modes';
 
-export default Component.extend(InViewportMixin, WindowKeyboardEventsMixin, {
+export default Component.extend(InViewportMixin, WindowEventsMixin, {
   tagName: 'button',
   classNames: ['piano-key'],
   classNameBindings: ['isBlack', 'isPlaying'],
 
   oscillator: injectService(),
+  windowEvents: injectService(),
 
   /**
    * We need to set `viewport` spy to `true` otherwise the component will only be watched when it
@@ -121,6 +122,15 @@ export default Component.extend(InViewportMixin, WindowKeyboardEventsMixin, {
   },
 
   /**
+   * Only play when the mouse enters if the mouse is already being pressed down
+   */
+  mouseEnter() {
+    if (get(this, 'windowEvents.isMouseDown')) {
+      this.startPlaying();
+    }
+  },
+
+  /**
    * If the mouse leaves the button without unclicking we still want to stop playing.
    */
   mouseLeave() {
@@ -128,13 +138,31 @@ export default Component.extend(InViewportMixin, WindowKeyboardEventsMixin, {
   },
 
   /**
-   * Need touch events for phones
+   *
+   * @override
    */
-  touchStart() {
+  didTouchStart() {
     this.startPlaying();
   },
 
-  touchEnd() {
+  /**
+   * @override
+   */
+  didTouchEnd() {
+    this.stopPlaying();
+  },
+
+  /**
+   * @override
+   */
+  didTouchEnter() {
+    this.startPlaying();
+  },
+
+  /**
+   * @override
+   */
+  didTouchLeave() {
     this.stopPlaying();
   },
 

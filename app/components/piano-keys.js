@@ -107,11 +107,35 @@ export default Component.extend({
     set(this, 'pianoKeys', this._generateKeys());
   },
 
+  didInsertElement() {
+    this._scrollToMiddle();
+  },
+
   /**
    * Proxy to module. Useful for testing.
    */
   _generateKeys(firstKey = 1, lastKey = MAX_KEYS) {
     return generateKeys(firstKey, lastKey);
+  },
+
+  /**
+   * We want to scroll to the middle of the keyboard when the page loads so the keyboard is in a
+   * more useable spot
+   */
+  _scrollToMiddle() {
+    let middleCIndex = 39;
+    this._scrollLeft(this._getKeyLeftOffset(middleCIndex));
+   },
+
+  _getKeyLeftOffset(keyNum) {
+    return this.$('.piano-key').eq(keyNum).offset().left;
+  },
+
+  /**
+   * Proxy to DOM
+   */
+  _scrollLeft(num) {
+    this.$()[0].scrollLeft = num;
   },
 
   actions: {

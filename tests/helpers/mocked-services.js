@@ -9,3 +9,7 @@ export const OscillatorStub = Service.extend({
   playSound() {},
   stopSound() {},
 });
+
+export const WindowEventsStub = Service.extend({
+  isMouseDown: false,
+});
