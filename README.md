@@ -2,8 +2,8 @@
 
 ![piano screenshot](docs/images/piano-screenshot.png)
 
-This Ember app uses the Web Audio API to create an interactive piano keyboard. The keyboard works
-on mobile as well as desktop.
+This Ember app uses the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
+to create an interactive piano keyboard. The keyboard works on mobile as well as desktop.
 
 Features include:
 
@@ -22,7 +22,7 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone <repository-url>` this repository
+* `git clone https://github.com/brandynbennett/piano-keyboard.git` this repository
 * `cd piano-keyboard`
 * `npm install`
 
