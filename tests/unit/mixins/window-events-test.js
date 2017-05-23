@@ -5,7 +5,7 @@ import td from 'testdouble';
 
 const { verify, when, matchers: { anything }} = td;
 
-module('Unit | Mixin | window keyboard events');
+module('Unit | Mixin | window events');
 
 test('Listens to keyboard events', function(assert) {
   assert.expect(2);

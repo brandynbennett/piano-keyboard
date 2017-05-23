@@ -4,7 +4,12 @@ import set from 'ember-metal/set';
 import computed from 'ember-computed';
 
 /**
- * Button to switch between different modes
+ * Button to switch between different modes.
+ *
+ * @param {array} modes (Required) An array of modes. Each should have a `value` and `displayName`
+ * @param {action} onSwitch What to do when the mode switches. Will be passed the new mode
+ * @param {string} selectedValue The `value` of the currently selected mode. Can use this to
+ * pick which mode is displayed first
  */
 export default Component.extend({
   tagName: 'button',

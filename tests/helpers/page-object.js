@@ -1,6 +1,7 @@
 import {
   IS_SCROLLABLE,
   SCROLL_MODE_SWITCHER,
+  WAVE_MODE_SWITCHER,
   PIANO_KEY,
   IS_BLACK,
   NOTE_NAME,
@@ -60,5 +61,13 @@ export default {
 
   pressKeyDown(num) {
     triggerEvent(`${PIANO_KEY}:nth-child(${num + 1})`, 'mousedown');
+  },
+
+  changeWaveMode(mode) {
+    fillIn(WAVE_MODE_SWITCHER, mode);
+  },
+
+  getWaveMode() {
+    return find(`${WAVE_MODE_SWITCHER} option:selected`).text().trim();
   },
 };

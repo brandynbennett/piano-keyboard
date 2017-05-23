@@ -5,6 +5,9 @@ import set from 'ember-metal/set';
 
 const PREVENT_SCROLL_FUNC = evt => evt.preventDefault();
 
+/**
+ * An entire piano keyboard including controls and keys
+ */
 export default Component.extend({
   classNames: ['piano-keyboard'],
 

@@ -5,7 +5,8 @@ let mouseDownFunc = null;
 let mouseUpFunc = null;
 
 /**
- * This service provides data about events happening on the `window`
+ * This service provides data about events happening on the `window`. You can look at the
+ * `isMouseDown` property to tell if the user is pressing the mouse down anywhere on the screen
  */
 export default Service.extend({
   /**
@@ -16,6 +17,11 @@ export default Service.extend({
   init() {
     this._super(...arguments);
     this._listenToMouseEvents();
+  },
+
+  willDestroy() {
+    this._removeEventListener('mousedown', this._getMouseDownFunc());
+    this._removeEventListener('mouseup', this._getMouseUpFunc());
   },
 
   _listenToMouseEvents() {
@@ -44,5 +50,12 @@ export default Service.extend({
    */
   _addEventListener(event, func) {
     window.addEventListener(event, func, false);
+  },
+
+  /**
+   * Proxy to DOM api
+   */
+  _removeEventListener(event, func) {
+    window.removeEventListener(event, func, false);
   },
 });

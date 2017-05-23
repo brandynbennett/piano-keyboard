@@ -1,6 +1,9 @@
 import Service from 'ember-service';
 import set from 'ember-metal/set';
 
+/**
+ * This service proxies to the AudioContext, which is necessary for generating sounds in the browser
+ */
 export default Service.extend({
   /**
    * The AudioContext. Required to get and receive sounds.

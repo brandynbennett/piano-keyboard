@@ -2,6 +2,9 @@ import Service from 'ember-service';
 import injectService from 'ember-service/inject';
 import get from 'ember-metal/get';
 
+/**
+ * Use this service to create, play, and stop sounds.
+ */
 export default Service.extend({
   audioContext: injectService(),
 
@@ -26,7 +29,6 @@ export default Service.extend({
 
     // Start the oscillator. Sound won't happen until the oscillator is connected to the context
     oscillator.start(0);
-
     return oscillator;
   },
 

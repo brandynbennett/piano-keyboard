@@ -1,7 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'piano-keyboard/tests/helpers/module-for-acceptance';
 import pianoKeyboard from 'piano-keyboard/tests/helpers/page-object';
-import { HOME_ROW, A_KEY } from 'piano-keyboard/utils/key-bindings';
+import { HOME_ROW } from 'piano-keyboard/utils/key-bindings';
 import { OscillatorStub } from 'piano-keyboard/tests/helpers/mocked-services';
 
 moduleForAcceptance('Acceptance | piano keyboard', {
@@ -18,7 +18,7 @@ test('Piano has correct keys', function(assert) {
 
   andThen(() => {
     assert.equal(pianoKeyboard.getWhiteKeys().length, 52, 'Has correct white keys');
-    assert.equal(pianoKeyboard.getBlackKeys().length, 36, 'Has correct white keys');
+    assert.equal(pianoKeyboard.getBlackKeys().length, 36, 'Has correct black keys');
   });
 });
 
@@ -84,5 +84,16 @@ test('Shows computer key bindings', function(assert) {
     assert.equal(pianoKeyboard.getBlackComputerKeyBindings().length,
       8 || 9,
       'Has black key bindings');
+  });
+});
+
+test('Can switch wave mode', function(assert) {
+  assert.expect(1);
+  pianoKeyboard.visitKeyBoard();
+
+  pianoKeyboard.changeWaveMode('square');
+
+  andThen(() => {
+    assert.equal(pianoKeyboard.getWaveMode(), 'Square');
   });
 });

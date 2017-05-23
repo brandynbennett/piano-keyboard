@@ -9,6 +9,9 @@ import { HOME_ROW, TOP_ROW } from 'piano-keyboard/utils/key-bindings';
  * The number of keys that need to be in the viewport for us to center the computer keyboard
  * bindings instead of having them be at the beginning of the keyboard
  * Exported for testing
+ *
+ * @param {boolean} isScrollable Whether or not to let the keys scroll
+ * @param {string} waveMode The wave sound to use for all the keys
  */
 export const SHOULD_CENTER_BINDINGS_AT = 28;
 

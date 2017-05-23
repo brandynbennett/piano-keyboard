@@ -8,6 +8,24 @@ import WindowEventsMixin from 'piano-keyboard/mixins/window-events';
 import on from 'ember-evented/on';
 import { DEFAULT_WAVE_MODE } from 'piano-keyboard/utils/wave-modes';
 
+/**
+ * An individual piano key
+ *
+ * @param {boolean} isBlack If it's a black key vs a white key
+ * @param {string} noteName The name of the note the key represents (e.g. 'C0', 'A4')
+ * @param {number} numberInOctave Index of the number in the octave 0 - 11
+ * @param {number} frequency The frequency the note should be
+ * @param {string} waveType The type of wave to use for the sound
+ * @param {number} noteNumber The number of the note on the keyboard 1 - 88
+ * @param {number} noteIndex The index of the note
+ * @param {number} computerKey The computer keyboard key to bind the note to
+ * @param {boolean} showComputerKey Whether or not the user wants help knowing which notes are
+ * bound to which keys
+ * @param {action} onEnterViewport action to perform when the key enters the viewport. Will be
+ * passed the noteIndex
+ * @param {action} onExitViewport action to perform when the key enters the viewport. Will be
+ * passed the noteIndex
+ */
 export default Component.extend(InViewportMixin, WindowEventsMixin, {
   tagName: 'button',
   classNames: ['piano-key'],
@@ -165,6 +183,16 @@ export default Component.extend(InViewportMixin, WindowEventsMixin, {
   didTouchLeave() {
     this.stopPlaying();
   },
+
+  /**
+   * What to do when the key enters the viewport
+   */
+  onEnterViewport() {},
+
+  /**
+   * What to do when the key leaves the viewport
+   */
+  onExitViewport() {},
 
   /**
    * We want to trigger an action when the key enters the viewport so the parent component can
