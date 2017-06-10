@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'piano-keyboard',
     environment: environment,
-    rootURL: '/',
+    rootURL: '/piano',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
